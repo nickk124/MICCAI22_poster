@@ -53,9 +53,9 @@
 
 \title{\huge The Intrinsic Manifolds of Radiological Images and their Role in Deep Learning} % Poster title
 
-\author{Nicholas Konz\textsuperscript{1*(\Letter)}\and Hanxue Gu\textsuperscript{1} \and Haoyu Dong\textsuperscript{2} \and Maciej Mazurowski\textsuperscript{1,2,3,4(\Letter)} } % Author(s)
+\author{Nicholas Konz\textsuperscript{1}\and Hanxue Gu\textsuperscript{1} \and Haoyu Dong\textsuperscript{2} \and Maciej Mazurowski\textsuperscript{1,2,3,4} } % Author(s)
 
-\institute{\textsuperscript{1}Department of Electrical and Computer Engineering, \textsuperscript{2}Department of Radiology, \textsuperscript{3}Department of Computer Science, \textsuperscript{4}Department of Biostatistics \& Bioinformatics,\\Duke University, North Carolina, USA} % Institution(s)
+\institute{\textsuperscript{1}Department of Electrical and Computer Engineering, \textsuperscript{2}Department of Radiology, \textsuperscript{3}Department of Computer Science, \textsuperscript{4}Department of Biostatistics \& Bioinformatics,\\Duke University, Durham, North Carolina, USA} % Institution(s)
 
 %----------------------------------------------------------------------------------------
 %	FOOTER TEXT
@@ -81,8 +81,33 @@
 
 \begin{block}{Introduction}
 
+\begin{columns} % Subdivide the first main column
+\begin{column}{.54\textwidth} % The first subdivided column within the first main column
 \begin{itemize}
-\item \textbf{The Manifold Hypothesis}
+\item \textbf{The Manifold Hypothesis (MH)}: \textit{High dimensional data can be well described by a much smaller number of degrees of freedom, or} \textbf{intrinsic dimensions}.
+    \begin{itemize}
+    \item The intrinsic dimension of a dataset estimates its information content. 
+    \item Neural networks can learn to convert raw data to abstract, informative features that are \textit{intrinsic} to the dataset \cite{ansuini2019intrinsic}.
+    \end{itemize}
+
+\end{itemize}
+\end{column}
+
+\begin{column}{.43\textwidth} % The second subdivided column within the first main column
+\centering
+\begin{figure}
+    \includegraphics[width=0.95\linewidth]{buchanan_etal_fig1.pdf}
+     \caption{\,Visualization of intrinsic low-dimensional image manifolds from \cite{buchanan2021deep}.}
+\end{figure}
+\end{column}
+\end{columns} % End of the subdivision
+\begin{itemize}
+\item \textbf{Why study the intrinsic dimension of medical images?}
+    \begin{itemize}
+        \item Medical vs. natural image datasets: different relevant semantics, yet we lack understanding of how networks learn differently between the two domains.
+        \item Due to the MH, understanding the intrinsic structure of medical image datasets is key to analyzing how networks learn from them.
+        \item We can answer questions such as ``how does the intrinsic dimension of a dataset affect how challenging it is for a network to learn from it?''
+    \end{itemize}
 \end{itemize}
 
 \end{block}
@@ -90,90 +115,76 @@
 \begin{block}{Objectives}
 
 \begin{enumerate}
-\item 
+\item Estimate the intrinsic dimensions of common radiology datasets, and compare to natural image datasets.
+\item Evaluate the relationship of dataset intrinsic dimension with network generalization ability; comparing within and between the domains of radiological and natural images.
 \end{enumerate}
 
 \end{block}
 
-\begin{block}{Datasets and Tasks}
-
-\begin{figure}
-    \includegraphics[width=0.95\linewidth]{frompaper/data_eg_1row.pdf}
-     \caption{Samples from our evaluated datasets.}
-\end{figure}
-
-\begin{columns} % Subdivide the first main column
-\begin{column}{.54\textwidth} % The first subdivided column within the first main column
+\begin{block}{Estimating the Intrinsic Dimension of Image Manifolds}
 \begin{itemize}
-\item Vestibulum nisl, quis euismod velit eros in ligula.
-\begin{itemize}
-\item Cras rhoncus quam et augue convallis in elementum urna tincidunt.
+    \item The MH says that our $d$-dimensional data lies on a manifold $\mathcal{M}\subseteq \mathbb{R}^d$ such that $\mathrm{dim}{\mathcal{M}}=m\ll d$.
+\item We can estimate $m$ via \textbf{maximum likelihood}:
+    \begin{itemize}
+        \item assume that manifold volume scales exponentially with $m$ as we move away from a point. 
+        \item model volume with $k$-nearest neighbor distance $T_k$.
+        \item Model dataset as being sampled from a Poisson Process, and find $m$ via MLE:
+        \begin{equation*}
+            \label{eq:id_mle}
+                \hat{m}=\left[\frac{1}{N(k-1)} \sum_{i=1}^{N} \sum_{j=1}^{k-1} \log \frac{T_{k}\left(x_{i}\right)}{T_{j}\left(x_{i}\right)}\right]^{-1}
+        \end{equation*}
+    \end{itemize}
+
 \end{itemize}
-\item Proin ut vestibulum augue.
-\begin{itemize}
-\item Donec dapibus sagittis neque eu ultrices.
-\end{itemize}
-\end{itemize}
-\end{column}
-
-\begin{column}{.43\textwidth} % The second subdivided column within the first main column
-\centering
-\begin{figure}
-\includegraphics[width=0.8\linewidth]{placeholder.jpg}
-\caption{Figure caption}
-\end{figure}
-\end{column}
-\end{columns} % End of the subdivision
-
-\begin{itemize}
-\item Curabitur sapien ligula, faucibus in feugiat quis, vestibulum a turpis.
-\begin{itemize}
-\item Phasellus quis nunc neque. Suspendisse mauris diam, suscipit non gravida in, placerat id enim. Ut nec ipsum in lectus ultrices sagittis.
-\item Ut nec ipsum in lectus ultrices sagittis.
-\item Phasellus quis nunc neque.
-\end{itemize}
-\end{itemize}
-
-\end{block}
-
-\begin{block}{}
-
-\end{block}
-
-\begin{block}{Estimating Intrinsic Dimension}
-
-\begin{itemize}
-\item Maecenas Ultricies Feugiat Velit Non Mattis.
-\begin{itemize}
-\item Duis
-\begin{align*}
-X \rightarrow r(X) & = \arg \max_{c} \Big\{ \max_n \big\{ \sum_{x_i \in X} \delta(x_i,Y_{n,c})\big\} \Big\} 
-\end{align*}
-\item Cras
-\end{itemize}
-\item Fusce
-\end{itemize}
-
 \end{block}
 
 %----------------------------------------------------------------------------------------
 
 \end{column} % End of the first column
-
 \begin{column}{.03\textwidth}\end{column} % Empty spacer column
+
  
 \begin{column}{.3\textwidth} % The second column
 
+\begin{block}{Datasets and Experimental Settings}
+
 \begin{figure}
-    \includegraphics[width=0.95\linewidth]{placeholder.jpg}
-     \caption{\todo{some visualization of intrinsic manifold dimension}}
+    \includegraphics[width=0.95\linewidth]{frompaper/data_eg_1row.pdf}
+     \caption{\,Samples from our seven evaluated datasets.}
 \end{figure}
+
+
+\begin{itemize}
+\item We analyze seven common radiology datasets from different modalities.
+\item \textbf{ID estimation:}
+\begin{itemize}
+    \item For each dataset, we use a sample of $7500$ images, evenly class-balanced according to our chosen binary classification task for each.
+\end{itemize}
+\item \textbf{ID and Generalization Ability}:
+\begin{itemize}
+    \item We train a classification network for each dataset, and test on 750 unseen data points.
+    \item We evaluate many training set sizes, neural network models, and task choices. All networks are maximally fit to the training set.
+\end{itemize}
+\end{itemize}
+
+\end{block}
 
 \begin{block}{Result 1: Radiological vs. Natural Image Intrinsic Dimension}
 \begin{figure}
-    \includegraphics[width=0.95\linewidth]{frompaper/ID.pdf}
-     \caption{Intrinsic dimension of \textcolor{paperblue}{radiological} and \textcolor{paperorange}{natural} \cite{pope2021intrinsic} image datasets.}
+    \includegraphics[width=0.95\linewidth]{frompaper/modified/ID.pdf}
+     \caption{\,Intrinsic dimension of \textcolor{paperblue}{radiological} and \textcolor{paperorange}{natural} \cite{pope2021intrinsic} image datasets.}
 \end{figure}
+
+\begin{itemize}
+    \item \textbf{Findings:}
+    \begin{itemize}
+        \item \textbf{Radiological image datasets tend to have lower intrinsic dimension (ID) than natural image datasets!}
+        \item ID $\ll$ extrinsic dimension (ED/num. of pixels).
+        \begin{itemize}
+            \item Intuitively, modifying ED (resizing images) didn't affect ID.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
 
 \end{block}
 
@@ -186,21 +197,46 @@ X \rightarrow r(X) & = \arg \max_{c} \Big\{ \max_n \big\{ \sum_{x_i \in X} \delt
 \begin{column}{.3\textwidth} % The third column
 
 
-\begin{block}{Result 2: Radiological vs. Natural Image Intrinsic Dimension}
+\begin{block}{Main Result: Intrinsic Dimension and Generalization Ability}
 
 \begin{figure}
+    \label{fig:linear}
     \includegraphics[width=0.95\linewidth]{frompaper/main_fig_multi_0.pdf}
-     \caption{Linearity of model generalization ability with respect to dataset intrinsic dimension, for \textcolor{paperblue}{radiological} and \textcolor{paperorange}{natural} image datasets ($N_\text{train}=2000$ on ResNet-18).}
+     \caption{\,Linearity of model generalization ability with respect to dataset intrinsic dimension, for \textcolor{paperblue}{radiological} and \textcolor{paperorange}{natural} image datasets ($N_\text{train}=2000$ on ResNet-18).}
 \end{figure}
 
-\todo{numerical evidence showing how these relationships didn't change with model, dataset size, task, etc (see paper)}
+\begin{columns}
+\begin{column}{.54\textwidth} % The first subdivided column within the first main column
+    \begin{itemize}
+    \item Vestibulum nisl, quis euismod velit eros in ligula.
+    \begin{itemize}
+    \item Cras rhoncus quam et augue convallis in elementum urna tincidunt.
+    \end{itemize}
+    \item Proin ut vestibulum augue.
+    \begin{itemize}
+    \item Donec dapibus sagittis neque eu ultrices.
+    \end{itemize}
+    \end{itemize}
+    \end{column}
+    
+    \begin{column}{.43\textwidth} % The second subdivided column within the first main column
+    \centering
+    \begin{figure}
+        \includegraphics[width=0.95\linewidth]{frompaper/modified/main_fig_multi.pdf}
+        \caption{\,Fig. \ref{fig:linear}, including training set size.}
+    \end{figure}
+    \end{column}
+\end{columns}
+\todo{numerical evidence showing how these relationships didn't change with model, dataset size, task, etc (see paper). Also additional results from "Contributions" in paper.}
+
 
 \end{block}
 
-\begin{block}{Open Questions}
+\begin{block}{Open Questions/Future Work}
 
 \begin{itemize}
-\item Opet volutpat ligula.
+\item Investigate theoretical reasons for linearity and difference in sharpness of correlation between the two domains
+\item Determine further uses of ID estimate for predictions, experiments etc.
 \end{itemize}
 
 \end{block}
