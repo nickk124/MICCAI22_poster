@@ -84,9 +84,9 @@
 \begin{columns} % Subdivide the first main column
 \begin{column}{.54\textwidth} % The first subdivided column within the first main column
 \begin{itemize}
-\item \textbf{The Manifold Hypothesis (MH)}: \textit{High dimensional data can be well described by a much smaller number of degrees of freedom, or} \textbf{intrinsic dimensions}.
+\item \textbf{The Manifold Hypothesis (MH)}: \textit{High dimensional data can be well described by a much smaller number of} \textbf{intrinsic dimensions}.
     \begin{itemize}
-    \item The intrinsic dimension of a dataset estimates its information content. 
+    %\item The intrinsic dimension of a dataset estimates its information content. 
     \item Neural networks can learn to convert raw data to abstract, informative features that are \textit{intrinsic} to the dataset \cite{ansuini2019intrinsic}.
     \end{itemize}
 
@@ -96,7 +96,7 @@
 \begin{column}{.43\textwidth} % The second subdivided column within the first main column
 \centering
 \begin{figure}
-    \includegraphics[width=0.95\linewidth]{buchanan_etal_fig1.pdf}
+    \includegraphics[width=0.8\linewidth]{buchanan_etal_fig1.pdf}
      \caption{\,Visualization of intrinsic low-dimensional image manifolds from \cite{buchanan2021deep}.}
 \end{figure}
 \end{column}
@@ -104,9 +104,10 @@
 \begin{itemize}
 \item \textbf{Why study the intrinsic dimension of medical images?}
     \begin{itemize}
-        \item Medical vs. natural image datasets: different relevant semantics, yet we lack understanding of how networks learn differently between the two domains.
+        \item Medical vs. natural images: different relevant semantics, 
+        %yet we lack an understanding of how networks learn differently between the domains.
         \item Due to the MH, understanding the intrinsic structure of medical image datasets is key to analyzing how networks learn from them.
-        \item We can answer questions such as ``how does the intrinsic dimension of a dataset affect how challenging it is for a network to learn from it?''
+        %\item We can answer questions such as ``how does the intrinsic dimension of a dataset affect how challenging it is for a network to learn to generalize to new data from it?''
     \end{itemize}
 \end{itemize}
 
@@ -123,12 +124,11 @@
 
 \begin{block}{Estimating the Intrinsic Dimension of Image Manifolds}
 \begin{itemize}
-    \item The MH says that our $d$-dimensional data lies on a manifold $\mathcal{M}\subseteq \mathbb{R}^d$ such that $\mathrm{dim}{\mathcal{M}}=m\ll d$.
+    \item By the MH: our $d$-dimensional data lies on a manifold $\mathcal{M}\subseteq \mathbb{R}^d$ such that $\mathrm{dim}\,{\mathcal{M}}=m\ll d$.
 \item We can estimate $m$ via \textbf{maximum likelihood}:
     \begin{itemize}
-        \item assume that manifold volume scales exponentially with $m$ as we move away from a point. 
-        \item model volume with $k$-nearest neighbor distance $T_k$.
-        \item Model dataset as being sampled from a Poisson Process, and find $m$ via MLE:
+        \item Assume that volume of $\mathcal{M}$ scales exponentially with $m$ as we move away from a point; model volume with $k$-NN distance $T_k$.
+        \item Model data sampling with a Poisson Process, and find $m$ via MLE:
         \begin{equation*}
             \label{eq:id_mle}
                 \hat{m}=\left[\frac{1}{N(k-1)} \sum_{i=1}^{N} \sum_{j=1}^{k-1} \log \frac{T_{k}\left(x_{i}\right)}{T_{j}\left(x_{i}\right)}\right]^{-1}
@@ -136,6 +136,18 @@
     \end{itemize}
 
 \end{itemize}
+\end{block}
+
+\begin{block}{Datasets}
+
+\begin{itemize}
+\item 7 common radiology datasets from different modalities:
+\end{itemize}
+\begin{figure}
+    \includegraphics[width=0.95\linewidth]{frompaper/data_eg_1row.pdf}
+    \caption{\,Samples from our seven evaluated datasets.}
+\end{figure}
+
 \end{block}
 
 %----------------------------------------------------------------------------------------
@@ -146,46 +158,46 @@
  
 \begin{column}{.3\textwidth} % The second column
 
-\begin{block}{Datasets and Experimental Settings}
+%\begin{block}{Result 1: }
+%\begin{itemize}
+%    \item For each dataset, we estimate intrinsic dim using $7500$ images, evenly class-balanced according to a chosen binary classification task for each.
+%\end{itemize}
+%\end{block}
 
-\begin{figure}
-    \includegraphics[width=0.95\linewidth]{frompaper/data_eg_1row.pdf}
-     \caption{\,Samples from our seven evaluated datasets.}
-\end{figure}
-
-
-\begin{itemize}
-\item We analyze seven common radiology datasets from different modalities.
-\item \textbf{ID estimation:}
-\begin{itemize}
-    \item For each dataset, we use a sample of $7500$ images, evenly class-balanced according to our chosen binary classification task for each.
-\end{itemize}
-\item \textbf{ID and Generalization Ability}:
-\begin{itemize}
-    \item We train a classification network for each dataset, and test on 750 unseen data points.
-    \item We evaluate many training set sizes, neural network models, and task choices. All networks are maximally fit to the training set.
-\end{itemize}
-\end{itemize}
-
+\setbeamercolor{block title}{fg=black,bg=paperblue!40} % Change the block title color
+\setbeamercolor{block body}{fg=black,bg=paperblue!20} % Change the block title color
+\begin{block}{Finding 1: Radiological vs. Natural Image Intrinsic Dimension}
+    Radiological image datasets tend to have lower intrinsic dimension than natural image datasets:
+    \begin{figure}
+        \includegraphics[width=0.95\linewidth]{frompaper/modified/ID.pdf}
+        \caption{\,Intrinsic dimension of \textcolor{paperblue}{radiological} and \textcolor{paperorange}{natural} \cite{pope2021intrinsic} image datasets.}
+    \end{figure}
 \end{block}
 
-\begin{block}{Result 1: Radiological vs. Natural Image Intrinsic Dimension}
-\begin{figure}
-    \includegraphics[width=0.95\linewidth]{frompaper/modified/ID.pdf}
-     \caption{\,Intrinsic dimension of \textcolor{paperblue}{radiological} and \textcolor{paperorange}{natural} \cite{pope2021intrinsic} image datasets.}
-\end{figure}
 
+% \begin{itemize}
+%     \item Additional findings:
+%     \begin{itemize}
+%         \item ID $\ll$ extrinsic dimension (ED/num. of pixels).
+%         \item Intuitively, modifying ED (resizing images) didn't affect ID.
+%     \end{itemize}
+% \end{itemize}
+
+% k}
+
+\setbeamercolor{block title}{fg=black,bg=paperblue!40} % Change the block title color
+\setbeamercolor{block body}{fg=black,bg=paperblue!20} % Change the block title color
+\begin{block}{Finding 2: Intrinsic Dimension and Generalization Ability}
 \begin{itemize}
-    \item \textbf{Findings:}
-    \begin{itemize}
-        \item \textbf{Radiological image datasets tend to have lower intrinsic dimension (ID) than natural image datasets!}
-        \item ID $\ll$ extrinsic dimension (ED/num. of pixels).
-        \begin{itemize}
-            \item Intuitively, modifying ED (resizing images) didn't affect ID.
-        \end{itemize}
-    \end{itemize}
+    \item Generalization ability (GA) is sharply linearly correlated with dataset intrinsic dimension (ID) \textit{within} radiological and natural imaging domains, but the steepness of this correlation differs noticeably \textit{between} the two domains.
+    \item The \textit{slope} of this GA vs. ID relationship is practically independent to model choice and/or training set size within an imaging domain.
+    %\item Our data also supports existing predictions that GA $\sim\propto \log N_{train}$.
 \end{itemize}
-
+\begin{figure}
+   \label{fig:linear}
+   \includegraphics[width=0.75\linewidth]{frompaper/main_fig_multi_0.pdf}
+   \caption{\,Linearity of model generalization ability with respect to dataset intrinsic dimension, for \textcolor{paperblue}{radiological} and \textcolor{paperorange}{natural} image datasets ($N_\text{train}=2000$ on ResNet-18).}
+\end{figure}
 \end{block}
 
 %----------------------------------------------------------------------------------------
@@ -197,51 +209,49 @@
 \begin{column}{.3\textwidth} % The third column
 
 
-\begin{block}{Main Result: Intrinsic Dimension and Generalization Ability}
 
-\begin{figure}
-    \label{fig:linear}
-    \includegraphics[width=0.95\linewidth]{frompaper/main_fig_multi_0.pdf}
-     \caption{\,Linearity of model generalization ability with respect to dataset intrinsic dimension, for \textcolor{paperblue}{radiological} and \textcolor{paperorange}{natural} image datasets ($N_\text{train}=2000$ on ResNet-18).}
-\end{figure}
+\setbeamercolor{block title}{fg=black,bg=ta2aluminium} % Change the block title color
+\setbeamercolor{block body}{fg=black,bg=white} % Change the block title color
+\begin{block}{Additional Findings}
+    \begin{itemize}
+        \item ID $\ll$ extrinsic dimension/ED (number of pixels).
+        \item Intuitively, modifying ED (resizing images) didn't affect ID.
+    \end{itemize}
+\end{block}
+\begin{block}{Experimental Settings}
+    \begin{itemize}
+        \item \textbf{Radiological vs. natural image IDs (Finding 1):}
+        \begin{itemize}
+            \item We estimated the intrinsic dimension of each dataset using $7500$ images, evenly class-balanced according to a chosen binary classification task for each.
+        \end{itemize}
 
-\begin{columns}
-\begin{column}{.54\textwidth} % The first subdivided column within the first main column
-    \begin{itemize}
-    \item Vestibulum nisl, quis euismod velit eros in ligula.
-    \begin{itemize}
-    \item Cras rhoncus quam et augue convallis in elementum urna tincidunt.
+        \item \textbf{Generalization ability vs. ID (Finding 2):}
+        \begin{itemize}
+        \item We trained a network on each dataset for its respective binary classification task, and tested on 750 unseen data points.
+        \item We evaluated 9 neural network models, each on 7 training set sizes, also performing task choice ablations.
+        \end{itemize}
     \end{itemize}
-    \item Proin ut vestibulum augue.
-    \begin{itemize}
-    \item Donec dapibus sagittis neque eu ultrices.
-    \end{itemize}
-    \end{itemize}
-    \end{column}
-    
-    \begin{column}{.43\textwidth} % The second subdivided column within the first main column
-    \centering
-    \begin{figure}
-        \includegraphics[width=0.95\linewidth]{frompaper/modified/main_fig_multi.pdf}
-        \caption{\,Fig. \ref{fig:linear}, including training set size.}
-    \end{figure}
-    \end{column}
-\end{columns}
-\todo{numerical evidence showing how these relationships didn't change with model, dataset size, task, etc (see paper). Also additional results from "Contributions" in paper.}
-
 
 \end{block}
 
-\begin{block}{Open Questions/Future Work}
+\begin{block}{Future Work}
 
 \begin{itemize}
-\item Investigate theoretical reasons for linearity and difference in sharpness of correlation between the two domains
-\item Determine further uses of ID estimate for predictions, experiments etc.
+\item Find theoretical support for the correlation of GA with dataset ID, and explain why the correlation sharpness differs between domains.
+\item Explore further uses of dataset ID estimation for modeling, experimentation, etc.
 \end{itemize}
 
 \end{block}
 
-
+\setbeamercolor{block title}{fg=black,bg=orange!70} % Change the block title color
+\setbeamercolor{block body}{fg=black,bg=orange!50} % Change the block title color
+\begin{block}{Contact Information}
+\begin{itemize}
+\item My email: \href{mailto:nicholas.konz@duke.edu}{nicholas.konz@duke.edu}
+\item My website: \url{https://nickk124.github.io/}
+\item Lab website: \url{https://sites.duke.edu/mazurowski/}
+\end{itemize}
+\end{block}
 \begin{block}{References}
         
 % \nocite{*} % Insert publications even if they are not cited in the poster
@@ -250,16 +260,6 @@
 
 \end{block}
 
-\setbeamercolor{block title}{fg=black,bg=orange!70} % Change the block title color
-
-\begin{block}{Contact Information}
-
-\begin{itemize}
-\item Web: \todo{lab website}
-\item Email: \href{mailto:nicholas.konz@duke.edu}{nicholas.konz@duke.edu}
-\end{itemize}
-
-\end{block}
 \end{column} % End of the third column
 
 
