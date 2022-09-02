@@ -21,7 +21,7 @@
 
 \documentclass[final,hyperref={pdfpagelabels=false}]{beamer}
 
-\usepackage[orientation=landscape,size=a0,scale=1.4]{beamerposter} % Use the beamerposter package for laying out the poster with a portrait orientation and an a0 paper size
+\usepackage[orientation=portrait,size=a0,scale=1.4]{beamerposter} % Use the beamerposter package for laying out the poster with a portrait orientation and an a0 paper size
 
 \usetheme{I6pd2} % Use the I6pd2 theme supplied with this template
 
@@ -63,7 +63,7 @@
 
 \newcommand{\leftfoot}{http://www.LaTeXTemplates.com} % Left footer text
 
-\newcommand{\rightfoot}{} % Right footer text
+\newcommand{\rightfoot}{Poster identifier: W69} % Right footer text
 
 %----------------------------------------------------------------------------------------
 
@@ -77,7 +77,7 @@
 
 \begin{column}{.02\textwidth}\end{column} % Empty spacer column
 
-\begin{column}{.3\textwidth} % The first column
+\begin{column}{.47\textwidth} % The first column
 
 \begin{block}{Introduction}
 
@@ -87,7 +87,7 @@
 \item \textbf{The Manifold Hypothesis (MH)}: \textit{High dimensional data can be well described by a much smaller number of} \textbf{intrinsic dimensions}.
     \begin{itemize}
     %\item The intrinsic dimension of a dataset estimates its information content. 
-    \item Neural networks can learn to convert raw data to abstract, informative features that are \textit{intrinsic} to the dataset \cite{ansuini2019intrinsic}.
+    \item Neural networks can learn to convert raw data to abstract, informative features that are \textit{intrinsic} to the dataset. % \cite{ansuini2019intrinsic}.
     \end{itemize}
 
 \end{itemize}
@@ -150,19 +150,6 @@
 
 \end{block}
 
-%----------------------------------------------------------------------------------------
-
-\end{column} % End of the first column
-\begin{column}{.03\textwidth}\end{column} % Empty spacer column
-
- 
-\begin{column}{.3\textwidth} % The second column
-
-%\begin{block}{Result 1: }
-%\begin{itemize}
-%    \item For each dataset, we estimate intrinsic dim using $7500$ images, evenly class-balanced according to a chosen binary classification task for each.
-%\end{itemize}
-%\end{block}
 
 \setbeamercolor{block title}{fg=black,bg=paperblue!40} % Change the block title color
 \setbeamercolor{block body}{fg=black,bg=paperblue!20} % Change the block title color
@@ -173,6 +160,21 @@
         \caption{\,Intrinsic dimension of \textcolor{paperblue}{radiological} and \textcolor{paperorange}{natural} \cite{pope2021intrinsic} image datasets.}
     \end{figure}
 \end{block}
+
+%----------------------------------------------------------------------------------------
+
+\end{column} % End of the first column
+\begin{column}{.02\textwidth}\end{column} % Empty spacer column
+
+ 
+\begin{column}{.47\textwidth} % The second column
+
+%\begin{block}{Result 1: }
+%\begin{itemize}
+%    \item For each dataset, we estimate intrinsic dim using $7500$ images, evenly class-balanced according to a chosen binary classification task for each.
+%\end{itemize}
+%\end{block}
+
 
 
 % \begin{itemize}
@@ -200,24 +202,14 @@
 \end{figure}
 \end{block}
 
-%----------------------------------------------------------------------------------------
-
-\end{column} % End of the second column
-
-\begin{column}{.03\textwidth}\end{column} % Empty spacer column
- 
-\begin{column}{.3\textwidth} % The third column
-
-
-
 \setbeamercolor{block title}{fg=black,bg=ta2aluminium} % Change the block title color
 \setbeamercolor{block body}{fg=black,bg=white} % Change the block title color
-\begin{block}{Additional Findings}
-    \begin{itemize}
-        \item ID $\ll$ extrinsic dimension/ED (number of pixels).
-        \item Intuitively, modifying ED (resizing images) didn't affect ID.
-    \end{itemize}
-\end{block}
+% \begin{block}{Additional Findings}
+%     \begin{itemize}
+%         \item ID $\ll$ extrinsic dimension/ED (number of pixels).
+%         \item Intuitively, modifying ED (resizing images) didn't affect ID.
+%     \end{itemize}
+% \end{block}
 \begin{block}{Experimental Settings}
     \begin{itemize}
         \item \textbf{Radiological vs. natural image IDs (Finding 1):}
@@ -259,12 +251,12 @@
 \bibliography{mainbib}}
 
 \end{block}
+%----------------------------------------------------------------------------------------
 
-\end{column} % End of the third column
+\end{column} % End of the second column
 
-
-\begin{column}{.015\textwidth}\end{column} % Empty spacer column
-
+\begin{column}{.02\textwidth}\end{column} % Empty spacer column
+ 
 \end{columns} % End of all the columns in the poster
 
 \end{frame} % End of the enclosing frame
