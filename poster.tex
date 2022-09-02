@@ -79,15 +79,32 @@
 
 \begin{column}{.47\textwidth} % The first column
 
+
 \begin{block}{Introduction}
 
 \begin{columns} % Subdivide the first main column
 \begin{column}{.54\textwidth} % The first subdivided column within the first main column
+
+\begin{columns} % Subdivide the first main column
+    \begin{column}{.05\textwidth}\end{column} % Empty spacer column
+    \begin{column}{.57\textwidth} % The first subdivided column within the first main column
+        {\LARGE \textcolor{red}{\textit{Link to paper:}}}
+    \end{column}
+    
+    \begin{column}{.25\textwidth} % The second subdivided column within the first main column
+    \centering
+    \begin{figure}
+        \includegraphics[width=0.95\linewidth]{qrcodes/code_topaper.pdf}
+    \end{figure}
+    \end{column}
+    \begin{column}{.05\textwidth}\end{column} % Empty spacer column
+\end{columns} % End of the subdivision
+
 \begin{itemize}
 \item \textbf{The Manifold Hypothesis (MH)}: \textit{High dimensional data can be well described by a much smaller number of} \textbf{intrinsic dimensions}.
     \begin{itemize}
     %\item The intrinsic dimension of a dataset estimates its information content. 
-    \item Neural networks can learn to convert raw data to abstract, informative features that are \textit{intrinsic} to the dataset. % \cite{ansuini2019intrinsic}.
+    \item Neural networks can learn to convert data to abstract, informative features that are \textit{intrinsic} to the dataset. % \cite{ansuini2019intrinsic}.
     \end{itemize}
 
 \end{itemize}
@@ -102,10 +119,9 @@
 \end{column}
 \end{columns} % End of the subdivision
 \begin{itemize}
-\item \textbf{Why study the intrinsic dimension of medical images?}
+\item \vspace{0.5cm} \textbf{Why study the intrinsic dimension of medical images?}
     \begin{itemize}
-        \item Medical vs. natural images: different relevant semantics, 
-        %yet we lack an understanding of how networks learn differently between the domains.
+        \item Medical vs. natural images: different relevant semantics, yet we lack an understanding of how networks learn differently between the domains.
         \item Due to the MH, understanding the intrinsic structure of medical image datasets is key to analyzing how networks learn from them.
         %\item We can answer questions such as ``how does the intrinsic dimension of a dataset affect how challenging it is for a network to learn to generalize to new data from it?''
     \end{itemize}
@@ -125,10 +141,10 @@
 \begin{block}{Estimating the Intrinsic Dimension of Image Manifolds}
 \begin{itemize}
     \item By the MH: our $d$-dimensional data lies on a manifold $\mathcal{M}\subseteq \mathbb{R}^d$ such that $\mathrm{dim}\,{\mathcal{M}}=m\ll d$.
-\item We can estimate $m$ via \textbf{maximum likelihood}:
+\item We can estimate $m$ via \textbf{maximum likelihood estimation}:
     \begin{itemize}
-        \item Assume that volume of $\mathcal{M}$ scales exponentially with $m$ as we move away from a point; model volume with $k$-NN distance $T_k$.
-        \item Model data sampling with a Poisson Process, and find $m$ via MLE:
+        \item Assume that the volume of $\mathcal{M}$ scales exponentially with $m$ as we move away from a point, and parameterize volume with $k$-NN distance $T_k$.
+        \item Model data with a Poisson Process, and find $m$ via MLE:
         \begin{equation*}
             \label{eq:id_mle}
                 \hat{m}=\left[\frac{1}{N(k-1)} \sum_{i=1}^{N} \sum_{j=1}^{k-1} \log \frac{T_{k}\left(x_{i}\right)}{T_{j}\left(x_{i}\right)}\right]^{-1}
@@ -141,7 +157,7 @@
 \begin{block}{Datasets}
 
 \begin{itemize}
-\item 7 common radiology datasets from different modalities:
+\item We analyze 7 common radiology datasets from different modalities:
 \end{itemize}
 \begin{figure}
     \includegraphics[width=0.95\linewidth]{frompaper/data_eg_1row.pdf}
@@ -214,7 +230,7 @@
     \begin{itemize}
         \item \textbf{Radiological vs. natural image IDs (Finding 1):}
         \begin{itemize}
-            \item We estimated the intrinsic dimension of each dataset using $7500$ images, evenly class-balanced according to a chosen binary classification task for each.
+            \item We estimated the ID of each dataset using $7500$ images, evenly class-balanced according to a chosen binary classification task.
         \end{itemize}
 
         \item \textbf{Generalization ability vs. ID (Finding 2):}
@@ -229,8 +245,8 @@
 \begin{block}{Future Work}
 
 \begin{itemize}
-\item Find theoretical support for the correlation of GA with dataset ID, and explain why the correlation sharpness differs between domains.
-\item Explore further uses of dataset ID estimation for modeling, experimentation, etc.
+\item Find theoretical support for the linear correlation of GA with dataset ID, and explain why the correlation sharpness differs between domains.
+\item Explore further uses of ID estimation for modeling, experimentation, etc.
 \end{itemize}
 
 \end{block}
@@ -240,8 +256,8 @@
 \begin{block}{Contact Information}
 \begin{itemize}
 \item My email: \href{mailto:nicholas.konz@duke.edu}{nicholas.konz@duke.edu}
-\item My website: \url{https://nickk124.github.io/}
-\item Lab website: \url{https://sites.duke.edu/mazurowski/}
+\item Lab website: \url{https://sites.duke.edu/mazurowski/} {\includegraphics[scale=5.0]{qrcodes/code_tolabsite.pdf}}
+\item My website: \url{https://nickk124.github.io/} {\includegraphics[scale=5.0]{qrcodes/code_tomysite.pdf}}
 \end{itemize}
 \end{block}
 \begin{block}{References}
